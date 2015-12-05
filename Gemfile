@@ -44,3 +44,4 @@ group :development, :test do
 end
 
 gem 'pry-rails'
+gem 'sorcery'
