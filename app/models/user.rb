@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
 
   before_create :generate_access_token
 
+  mount_uploader :avatar, AvatarUploader
+
   def generate_access_token
       begin
         self.auth_token = SecureRandom.hex
