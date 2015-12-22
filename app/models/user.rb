@@ -23,10 +23,11 @@ class User < ActiveRecord::Base
   end
 
   def meet_your_soul_mate
-    lover = User.where.not(sex: self.sex).offset( rand(User.count) ).first
-    binding.pry
+    isomerisms = User.where.not(sex: self.sex)
+    lover = isomerisms.offset( rand(isomerisms.count) ).first
     self.follow(lover)
     lover.follow(self)
+    Room.create(user_id: self.id, lover_id: lover.id)
     return lover
   end
 

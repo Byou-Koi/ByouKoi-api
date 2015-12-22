@@ -8,5 +8,6 @@ Rails.application.routes.draw do
     end
     resources :sessions, only: [:create]
     resources :chats, only: [:index, :create]
+    resources :rooms, only: [:show]
   end
 end
