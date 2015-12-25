@@ -13,6 +13,7 @@ class Api::UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @lovers = @user.following
+    @longest_periods = @user.longest_periods
   end
 
   def update

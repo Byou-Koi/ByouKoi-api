@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   authenticates_with_sorcery!
 
   has_many :chats
+  has_many :rooms
 
   validates :password, length: { minimum: 4 }, if: -> { new_record? || changes["password"] }
   validates :password, confirmation: true, if: -> { new_record? || changes["password"] }
@@ -38,5 +39,16 @@ class User < ActiveRecord::Base
   def check_lover(target_user_id)
     follow = Follow.get_follow(self.id, target_user_id)
     follow.update(checked: true)
+  end
+
+  def longest_periods
+    anniversary = self.follows.order("created_at").first.created_at
+    today = Date.today
+    today.day - anniversary.to_date.day
+  end
+
+  def last_message_text(lover)
+    room = self.rooms.find_by(lover_id: lover.id)
+    room.chats.order("created_at desc").first
   end
 end
